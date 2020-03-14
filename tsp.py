@@ -1,5 +1,5 @@
 from argparse import ArgumentParser
-from node import Node
+from misc import read_data
 from brute_force import brute_force
 
 
@@ -10,18 +10,6 @@ def parse_args():
 
     args = parser.parse_args()
     return args.file, args.algorithm
-
-
-def read_data(filename: str):
-    nodes = []
-
-    with open(filename, 'r') as file:
-        for row in file:
-            label, x, y = row.strip().split(' ')
-            new_node = Node(label, float(x), float(y))
-            nodes.append(new_node)
-
-    return nodes
 
 
 def main():

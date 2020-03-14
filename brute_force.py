@@ -1,4 +1,4 @@
-from node import Node
+from misc import Node
 
 
 def brute_force(nodes):
