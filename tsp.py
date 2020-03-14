@@ -16,9 +16,9 @@ def read_data(filename: str):
     nodes = []
 
     with open(filename, 'r') as file:
-        for i, row in enumerate(file):
-            x, y = row.strip().split(' ')
-            new_node = Node(i, float(x), float(y))
+        for row in file:
+            label, x, y = row.strip().split(' ')
+            new_node = Node(label, float(x), float(y))
             nodes.append(new_node)
 
     return nodes
