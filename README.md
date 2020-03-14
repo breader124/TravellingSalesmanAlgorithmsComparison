@@ -13,7 +13,8 @@ pip install matplotlib  # download matplotlib
 # Run
 Run with `python3 tsp.py {input_file} {algorithm}`.
 Algorithms:
-* TODO
+* `bf` - brute force, checks all permutations.
+Time O(n!). Warning: for just 12 nodes it runs for approximately 1 minute.
 
 Program shows plot with solution by default.
 If you want only text output you can add `--text` option.
