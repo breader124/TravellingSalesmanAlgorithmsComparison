@@ -21,7 +21,8 @@ def main():
     else:
         raise Exception(f'Algorithm {algorithm} not implemented!')
 
-    print(path)
+    labels = [node.label for node in path]
+    print(' '.join(labels))
     print(cost)
     print(time)
 
