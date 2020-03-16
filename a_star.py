@@ -100,20 +100,15 @@ def kruskal_algorithm(nodes):
 
 def edges_from_nodes(nodes):
     nodes = list(nodes)
+    second = nodes.copy()
+    second.reverse()
     edges = []
-    middle = len(nodes) // 2
-    first_half = nodes[middle:]
-    second_half = nodes[:middle]
 
-    for first_node in first_half:
-        for second_node in second_half:
+    for first_node in nodes:
+        second.pop()
+        for second_node in second:
             edge_len = dist(first_node, second_node)
             edges.append(Edge(first_node, second_node, edge_len))
-
-    if len(first_half) > 1:
-        edges.extend(edges_from_nodes(first_half))
-    if len(second_half) > 1:
-        edges.extend(edges_from_nodes(second_half))
 
     return edges
 
