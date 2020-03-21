@@ -18,10 +18,6 @@ class Edge:
         self.length = length
 
 
-def dist(a: Node, b: Node):
-    return sqrt((a.x - b.x)**2 + (a.y - b.y)**2)
-
-
 def read_data(filename: str):
     nodes = []
 
@@ -32,3 +28,41 @@ def read_data(filename: str):
             nodes.append(new_node)
 
     return nodes
+
+
+def edges_from_nodes(nodes):
+    nodes = list(nodes)
+    second = nodes.copy()
+    second.reverse()
+    edges = []
+
+    for first_node in nodes:
+        second.pop()
+        for second_node in second:
+            edge_len = dist(first_node, second_node)
+            edges.append(Edge(first_node, second_node, edge_len))
+
+    return edges
+
+
+def dist_from_beginning(state, start_node, total_size):
+    if chose_home_too_early(state, start_node, total_size):
+        return float('inf')
+
+    d = 0
+    for i in range(1, len(state)):
+        d = d + dist(state[i - 1], state[i])
+
+    return d
+
+
+def dist(a: Node, b: Node):
+    return sqrt((a.x - b.x)**2 + (a.y - b.y)**2)
+
+
+def chose_home_too_early(state, start_node, total_size):
+    return len(state) < total_size and state[-1] == start_node
+
+
+def take_len(edge):
+    return edge.length
