@@ -45,23 +45,8 @@ def edges_from_nodes(nodes):
     return edges
 
 
-def dist_from_beginning(state, start_node, total_size):
-    if chose_home_too_early(state, start_node, total_size):
-        return float('inf')
-
-    d = 0
-    for i in range(1, len(state)):
-        d = d + dist(state[i - 1], state[i])
-
-    return d
-
-
 def dist(a: Node, b: Node):
     return sqrt((a.x - b.x)**2 + (a.y - b.y)**2)
-
-
-def chose_home_too_early(state, start_node, total_size):
-    return len(state) < total_size and state[-1] == start_node
 
 
 def take_len(edge):
