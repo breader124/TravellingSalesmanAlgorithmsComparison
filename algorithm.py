@@ -1,4 +1,5 @@
 from misc import dist
+from heuristics import Heuristic
 
 
 class Algorithm:
@@ -7,12 +8,16 @@ class Algorithm:
         self.nodes_left = []
         self.current_state = [self.nodes[0]]
         self.expanded_state = []
+        self.heuristic = Heuristic(nodes)
 
     def is_terminal_state(self):
-        all_nodes_included = len(set(self.current_state)) == len(self.nodes)
-        last_node_is_start_node = self.current_state[-1] == self.nodes[0]
+        return self.is_all_nodes_included() and self.is_last_node_is_start_node()
 
-        return all_nodes_included and last_node_is_start_node
+    def is_all_nodes_included(self):
+        return len(set(self.current_state)) == len(self.nodes)
+
+    def is_last_node_is_start_node(self):
+        return self.current_state[-1] == self.nodes[0]
 
     def update_expanded_state(self):
         self.update_nodes_left()

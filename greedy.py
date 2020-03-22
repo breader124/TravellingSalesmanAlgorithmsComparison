@@ -1,8 +1,6 @@
 from time import process_time
 
-from misc import *
 from algorithm import Algorithm
-from heuristics import heuristic
 
 
 class GreedyAlgorithm(Algorithm):
@@ -10,14 +8,11 @@ class GreedyAlgorithm(Algorithm):
         Algorithm.__init__(self, nodes)
 
     def run(self):
-        edges = edges_from_nodes(self.nodes)
-        edges.sort(key=take_len)
-
         time_start = process_time()
 
         while not self.is_terminal_state():
             self.update_expanded_state()
-            self.update_current_state(edges)
+            self.update_current_state()
 
         path, cost = self.current_state, self.dist_from_beginning(self.current_state)
 
@@ -26,13 +21,13 @@ class GreedyAlgorithm(Algorithm):
 
         return path, cost, time_elapsed
 
-    def update_current_state(self, edges):
+    def update_current_state(self):
         min_cost = float('inf')
         cheapest_state = []
 
         for s in self.expanded_state:
             dist_from_beg = self.dist_from_beginning(s)
-            cost = dist_from_beg + heuristic(edges, s, self.nodes)
+            cost = dist_from_beg + self.heuristic.compute(s)
             if cost < min_cost:
                 min_cost = cost
                 cheapest_state = s
