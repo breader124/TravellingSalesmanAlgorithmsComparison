@@ -1,10 +1,11 @@
 from misc import dist
 from heuristics import Heuristic
+from algorithm import Algorithm
 
 
-class HeuristicAlgorithm:
+class HeuristicAlgorithm(Algorithm):
     def __init__(self, nodes):
-        self.nodes = nodes
+        Algorithm.__init__(self, nodes)
         self.nodes_left = []
         self.current_state = [self.nodes[0]]
         self.expanded_state = []
