@@ -11,7 +11,7 @@ class Heuristic:
         if algo == 'min_edge':
             nodes_left = len(self.nodes) - len(state) + 1
             return self.min_edge_len_between_not_used_nodes(state) * nodes_left
-        elif algo == 'msp':
+        elif algo == 'mst':
             return self.min_spanning_tree_len()
 
     def min_edge_len_between_not_used_nodes(self, state):
