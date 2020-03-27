@@ -7,12 +7,12 @@ class Heuristic:
         self.edges = edges_from_nodes(nodes)
         self.edges.sort(key=take_len)
 
-    def compute(self, state):
-        nodes_left = len(self.nodes) - len(state) + 1
-        return self.min_edge_len_between_not_used_nodes(state) * nodes_left
-
-    def compute_using_msp(self):
-        return self.min_spanning_tree_len()
+    def compute(self, state, algo='min_edge'):
+        if algo == 'min_edge':
+            nodes_left = len(self.nodes) - len(state) + 1
+            return self.min_edge_len_between_not_used_nodes(state) * nodes_left
+        elif algo == 'msp':
+            return self.min_spanning_tree_len()
 
     def min_edge_len_between_not_used_nodes(self, state):
         for edge in self.edges:
