@@ -1,12 +1,12 @@
 from time import process_time
 import heapq
 
-from algorithm import Algorithm
+from heuristic_algorithm import HeuristicAlgorithm
 
 
-class AStarAlgorithm(Algorithm):
+class AStarAlgorithm(HeuristicAlgorithm):
     def __init__(self, nodes):
-        Algorithm.__init__(self, nodes)
+        HeuristicAlgorithm.__init__(self, nodes)
         self.states = []
 
     def run(self):
@@ -19,7 +19,8 @@ class AStarAlgorithm(Algorithm):
             self.update_states_vector()
             self.update_current_state()
 
-        path, cost = self.current_state, self.dist_from_beginning(self.current_state)
+        path = self.current_state
+        cost = self.dist_from_beginning(path)
 
         time_end = process_time()
         time_elapsed = time_end - time_start

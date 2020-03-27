@@ -1,11 +1,11 @@
 from time import process_time
 
-from algorithm import Algorithm
+from heuristic_algorithm import HeuristicAlgorithm
 
 
-class GreedyAlgorithm(Algorithm):
+class GreedyAlgorithm(HeuristicAlgorithm):
     def __init__(self, nodes):
-        Algorithm.__init__(self, nodes)
+        HeuristicAlgorithm.__init__(self, nodes)
 
     def run(self):
         time_start = process_time()

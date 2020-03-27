@@ -2,7 +2,7 @@ from misc import dist
 from heuristics import Heuristic
 
 
-class Algorithm:
+class HeuristicAlgorithm:
     def __init__(self, nodes):
         self.nodes = nodes
         self.nodes_left = []
