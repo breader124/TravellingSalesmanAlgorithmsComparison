@@ -1,7 +1,8 @@
 from argparse import ArgumentParser
 from misc import read_data
-from brute_force import brute_force
-from a_star import a_star
+from brute_force import BruteForce
+from a_star import AStarAlgorithm
+from greedy import GreedyAlgorithm
 
 
 def parse_args():
@@ -28,11 +29,15 @@ def main():
     nodes = read_data(file)
 
     if algorithm == 'bf':
-        path, cost, time = brute_force(nodes)
+        solver = BruteForce(nodes)
     elif algorithm == 'a-star':
-        path, cost, time = a_star(nodes)
+        solver = AStarAlgorithm(nodes)
+    elif algorithm == 'greedy':
+        solver = GreedyAlgorithm(nodes)
     else:
         raise Exception(f'Algorithm {algorithm} not implemented!')
+
+    path, cost, time = solver.run()
 
     labels = [node.label for node in path]
     print(' '.join(labels))

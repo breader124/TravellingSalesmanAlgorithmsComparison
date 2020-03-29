@@ -1,7 +1,7 @@
 import unittest
 import os
 from misc import read_data
-from a_star import a_star
+from a_star import AStarAlgorithm
 
 cases_cut = 'cases_cut'
 
@@ -23,7 +23,9 @@ class MyTestCase(unittest.TestCase):
 
 def run_a_star(path_to_file):
     nodes = read_data(path_to_file)
-    path_nodes, cost, time = a_star(nodes)
+
+    algorithm = AStarAlgorithm(nodes)
+    path_nodes, cost, time = algorithm.run()
 
     path = get_path_and_path_reversed(path_nodes)
     cost = round(cost, 2)

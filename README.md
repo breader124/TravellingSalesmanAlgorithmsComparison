@@ -3,11 +3,11 @@ Comparison of different algorithms for solving TSP.
 Current implementations: TODO.
 
 # Dependencies
-If you want to plot results you need `matplotlib`:
+If you want to plot results you need `matplotlib` and `seaborn`:
 ```bash
 python3 -m venv venv    # create new virtual environment
 . venv/bin/activate     # activate
-pip install matplotlib  # download matplotlib
+pip install matplotlib seaborn  # download matplotlib
 ```
 
 # Run
