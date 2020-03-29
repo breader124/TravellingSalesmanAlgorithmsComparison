@@ -10,7 +10,7 @@ python3 -m venv venv    # create new virtual environment
 pip install matplotlib seaborn  # download matplotlib
 ```
 
-# Run
+# Run single
 Run with `python3 tsp.py {input_file} {algorithm}`.
 Algorithms:
 * `bf` - brute force, checks all permutations.
@@ -26,6 +26,15 @@ Program reads file where each line has the following format: `label x_coordinate
 First line contains an itinerary that minimizes the total distance.
 Second line contains total cost of itinerary.
 Third line contains computation time in seconds.
+
+# Compare
+Generate test cases using `python gen_exp.py {max_number_of_nodes} {output_directory}`.
+
+You can run all experiments with `python experiments.py {input_folder} [-y] [--plot]`.
+
+You can run repeated experiments for single algorithm using `python run_repeated.py {input_folder} {bf/a-star/greedy} {number_of_repeats}`.
+
+Make a plot using `python plots.py {output_file}`.
 
 # Data
 Data in `cases` directory comes from
