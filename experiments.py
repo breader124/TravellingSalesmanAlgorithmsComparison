@@ -3,6 +3,7 @@ from csv import DictWriter
 from glob import glob
 from time import process_time
 import os
+import tracemalloc
 
 from misc import read_data
 from brute_force import BruteForce
@@ -53,6 +54,7 @@ def main():
     files = glob(f'{directory}/*.in')
     files.sort()
     experiment_start = process_time()
+    tracemalloc.start()
 
     for i, file in enumerate(files):
         case_start = process_time()
@@ -89,6 +91,8 @@ def main():
     experiment_stop = process_time()
     experiment_time = experiment_stop - experiment_start
     print(f'Finished experiments in {experiment_time:.2f} seconds')
+    _, peak = tracemalloc.get_traced_memory()
+    print(f'Peak memory usage: {(peak / 10**6):.1f}MB')
 
     if not os.path.exists(output_dir):
         os.mkdir(output_dir)
