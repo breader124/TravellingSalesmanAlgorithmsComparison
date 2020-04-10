@@ -1,6 +1,7 @@
 from time import process_time
 import heapq
 
+from misc import dist
 from heuristic_algorithm import HeuristicAlgorithm
 
 
@@ -28,9 +29,9 @@ class AStarAlgorithm(HeuristicAlgorithm):
         return path, cost, time_elapsed
 
     def update_states_vector(self):
-        heapq.heappop(self.states)
+        cost, _ = heapq.heappop(self.states)
         for s in self.expanded_state:
-            dist_from_beg = self.dist_from_beginning(s)
+            dist_from_beg = cost + dist(s[-2], s[-1])
             cost = dist_from_beg + self.heuristic.compute(s)
             heapq.heappush(self.states, (cost, s))
 
