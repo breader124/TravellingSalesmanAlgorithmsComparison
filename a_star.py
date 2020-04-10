@@ -32,10 +32,10 @@ class AStarAlgorithm(HeuristicAlgorithm):
         dist_to_state, _ = heapq.heappop(self.states)
         for s in self.expanded_state:
             if self.chose_home_too_early(s):
-                dist_from_beg = float('inf')
+                continue
             else:
                 dist_from_beg = dist_to_state + dist(s[-2], s[-1])
-            cost = dist_from_beg + self.heuristic.compute(s)
+            cost = dist_from_beg + self.heuristic.compute(s, 'mst')
             heapq.heappush(self.states, (cost, s))
 
     def update_current_state(self):

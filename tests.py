@@ -17,8 +17,8 @@ class MyTestCase(unittest.TestCase):
             computed_path, computed_cost = run_a_star(full_path)
             given_res_path, given_res_cost = load_given_results(filename)
 
-            self.assertIn(given_res_path, computed_path, filename)
             self.assertEqual(given_res_cost, computed_cost, filename)
+            self.assertIn(given_res_path, computed_path, filename)
 
 
 def run_a_star(path_to_file):
