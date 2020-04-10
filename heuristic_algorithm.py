@@ -28,8 +28,7 @@ class HeuristicAlgorithm(Algorithm):
             self.expanded_state.append([*self.current_state, node])
 
     def update_nodes_left(self):
-        self.nodes_left = set(self.nodes).difference(self.current_state)
-        self.nodes_left = list(self.nodes_left)
+        self.nodes_left = list(set(self.nodes).difference(self.current_state))
         self.nodes_left.append(self.nodes[0])
 
     def dist_from_beginning(self, state_to_measure):
