@@ -35,7 +35,7 @@ class AStarAlgorithm(HeuristicAlgorithm):
                 dist_from_beg = float('inf')
             else:
                 dist_from_beg = dist_to_state + dist(s[-2], s[-1])
-            cost = dist_from_beg + self.heuristic.compute(s, 'mst')
+            cost = dist_from_beg + self.heuristic.compute(s)
             heapq.heappush(self.states, (cost, s))
 
     def update_current_state(self):
