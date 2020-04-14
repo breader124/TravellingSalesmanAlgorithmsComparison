@@ -23,7 +23,7 @@ class Heuristic:
     def is_edge_used(self, edge, state):
         try:
             first = state.index(edge.first_node.label)
-            second = state.index(edge.first_node.label)
+            second = state.index(edge.second_node.label)
             return abs(first - second) == 1
         except ValueError:
             return False
