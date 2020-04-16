@@ -36,6 +36,10 @@ You can run repeated experiments for single algorithm using `python run_repeated
 
 Make a plot using `python plots.py {output_file}`.
 
+# Tests
+There is possibility to run prepared A* tests using `python tests.py`. Single test in that script takes data from
+'cases_cut' directory, solves it using A* algorithm and compares computed solutions with given solutions.
+
 # Data
 Data in `cases` directory comes from
 [people.sc.fsu.edu](https://people.sc.fsu.edu/~jburkardt/datasets/tsp/tsp.html)
