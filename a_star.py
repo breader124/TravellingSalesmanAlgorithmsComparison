@@ -99,15 +99,15 @@ def heuristic(edges, state, nodes, nodes_left):
         return min_edge_len_between_not_used_nodes(edges, state) * nodes_left
 
 
-def kruskal_algorithm(nodes):
+def kruskal_algorithm(nodes_left):
     msp_tree_dist = 0
 
-    edges = edges_from_nodes(nodes)
+    edges = edges_from_nodes(nodes_left)
 
     edges.sort(key=take_len)
 
     same_nodes = set()
-    while edges and len(same_nodes) < len(nodes):
+    while edges and len(same_nodes) < len(nodes_left):
         current_edge = edges[0]
         if current_edge.first_node not in same_nodes or current_edge.second_node not in same_nodes:
             same_nodes.add(current_edge.first_node)
