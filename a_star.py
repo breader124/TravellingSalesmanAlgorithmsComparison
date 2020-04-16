@@ -12,12 +12,14 @@ def a_star(nodes):
 
     current_state = [nodes[0]]
     states = []
-    heapq.heappush(states, (0, current_state))
+
+    # cost, heuristic, current_state
+    heapq.heappush(states, (0, 0, current_state))
 
     while not is_terminal_state(current_state, nodes):
         nodes_left = get_nodes_left(nodes, current_state)
         current_expanded = get_expanded_state(current_state, nodes_left)
-        states = get_updated_states_vector(edges, states, current_expanded, nodes)
+        states = get_updated_states_vector(edges, states, current_expanded, nodes, nodes_left)
         current_state = get_current_state(states)
 
     path, cost = current_state, dist_from_beginning(current_state, nodes[0], len(nodes))
@@ -51,18 +53,24 @@ def get_expanded_state(current_state, nodes_left):
 
 def get_current_state(states):
     popped = heapq.heappop(states)
-    current_state = popped[1]
+    current_state = popped[2]
     heapq.heappush(states, popped)
 
     return current_state
 
 
-def get_updated_states_vector(edges, states, expanded, nodes):
-    heapq.heappop(states)
+def get_updated_states_vector(edges, states, expanded, nodes, nodes_left):
+    d, h, _ = heapq.heappop(states)
+    without_heuristic = d - h
     for s in expanded:
-        dist_from_beg = dist_from_beginning(s, nodes[0], len(nodes) + 1)
-        cost = dist_from_beg + heuristic(edges, s, nodes)
-        heapq.heappush(states, (cost, s))
+        if chose_home_too_early(s, nodes[0], len(nodes) + 1):
+            continue
+        else:
+            dist_from_beg = without_heuristic + dist(s[-2], s[-1])
+
+        heur = heuristic(edges, s, nodes, nodes_left)
+        cost = dist_from_beg + heur
+        heapq.heappush(states, (cost, heur, s))
 
     return states
 
@@ -82,10 +90,10 @@ def chose_home_too_early(state, start_node, total_size):
     return len(state) < total_size and state[-1] == start_node
 
 
-def heuristic(edges, state, nodes):
-    span_tree = False
+def heuristic(edges, state, nodes, nodes_left):
+    span_tree = True
     if span_tree:
-        return kruskal_algorithm(nodes)
+        return kruskal_algorithm(nodes_left)
     else:
         nodes_left = len(nodes) - len(state) + 1
         return min_edge_len_between_not_used_nodes(edges, state) * nodes_left
