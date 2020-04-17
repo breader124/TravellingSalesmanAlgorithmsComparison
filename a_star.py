@@ -93,14 +93,18 @@ def chose_home_too_early(state, start_node, total_size):
 def heuristic(edges, state, nodes, nodes_left):
     span_tree = True
     if span_tree:
-        return kruskal_algorithm(nodes_left)
+        return kruskal_algorithm(nodes_left, edges, state)
     else:
         nodes_left = len(nodes) - len(state) + 1
         return min_edge_len_between_not_used_nodes(edges, state) * nodes_left
 
 
-def kruskal_algorithm(nodes_left):
+def kruskal_algorithm(nodes_left, all_edges, state):
     msp_tree_dist = 0
+    nodes_left = set(nodes_left) - set(state)
+
+    if not nodes_left:
+        return 0
 
     edges = edges_from_nodes(nodes_left)
 
@@ -116,7 +120,24 @@ def kruskal_algorithm(nodes_left):
 
         edges.remove(current_edge)
 
-    return msp_tree_dist
+    start_node = state[0]
+    start_len = float('inf')
+    start_found = False
+
+    end_node = state[-1]
+    end_len = float('inf')
+    end_found = False
+    for e in all_edges:
+        if not start_found and ((e.first_node == start_node and e.second_node in nodes_left) or (e.first_node in nodes_left and e.second_node == start_node)):
+            start_len = e.length
+            start_found = True
+        if not end_found and ((e.first_node == end_node and e.second_node in nodes_left) or (e.first_node in nodes_left and e.second_node == end_node)):
+            end_len = e.length
+            end_found = True
+        if start_found and end_found:
+            break
+
+    return start_len + msp_tree_dist + end_len
 
 
 def edges_from_nodes(nodes):
