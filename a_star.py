@@ -106,7 +106,7 @@ class AStarAlgorithm:
         if not nodes_left:
             return 0
 
-        edges = edges_from_nodes(nodes_left)
+        edges = self.only_left_edges(nodes_left)
 
         G = nx.Graph()
         for edge in edges:
@@ -134,3 +134,7 @@ class AStarAlgorithm:
             heapq.heappush(end_edges, dist(end_node, node))
 
         return heapq.heappop(start_edges), heapq.heappop(end_edges)
+
+    def only_left_edges(self, nodes_left):
+        left_edges = [edge for edge in self.edges if edge.first_node in nodes_left and edge.second_node in nodes_left]
+        return left_edges
