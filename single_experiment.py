@@ -23,8 +23,8 @@ def single_experiment(input_file, algo):
     else:
         raise Exception(f'Algorithm {algo} not implemented!')
 
-    path, cost, time = solver.run()
+    _, cost, time = solver.run()
 
     _, peak = tracemalloc.get_traced_memory()
 
-    return n, time, peak
+    return n, time, cost, peak

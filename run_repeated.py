@@ -30,18 +30,22 @@ def main():
             print(f'Starting {file}:')
             times = []
             mems = []
+            costs = []
 
             for i in range(repeats):
-                nodes_no, time, memory = single_experiment(file, algo)
+                nodes_no, time, cost, memory = single_experiment(file, algo)
                 writer.writerow({'n': nodes_no, 'time': time})
                 print(f'    Finished {i + 1}/{repeats}')
 
                 times.append(time)
                 mems.append(memory)
+                costs.append(cost)
 
             mean_time = sum(times) / len(times)
+            mean_cost = sum(costs) / len(costs)
             mean_mem = sum(mems) / len(mems)
             print(f'    * Mean time {mean_time:.4f} seconds')
+            print(f'    * Mean cost {mean_cost:.4f}')
             print(f'    * Mean peak memory: {(mean_mem / 10 ** 6):.1f}MB')
             print(f'Finished {file}')
 
