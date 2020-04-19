@@ -1,4 +1,5 @@
 from time import process_time
+import networkx as nx
 import heapq
 
 from misc import dist, edges_from_nodes
@@ -106,17 +107,14 @@ class AStarAlgorithm:
             return 0
 
         edges = edges_from_nodes(nodes_left)
-        edges.sort(key=take_len)
 
-        same_nodes = set()
-        while edges and len(same_nodes) < len(nodes_left):
-            current_edge = edges[0]
-            if current_edge.first_node not in same_nodes or current_edge.second_node not in same_nodes:
-                same_nodes.add(current_edge.first_node)
-                same_nodes.add(current_edge.second_node)
-                msp_tree_dist = msp_tree_dist + current_edge.length
+        G = nx.Graph()
+        for edge in edges:
+            G.add_edge(int(edge.first_node.label), int(edge.second_node.label), weight=edge.length)
+        T = nx.minimum_spanning_tree(G)
 
-            edges.remove(current_edge)
+        for t in T.edges(data='weight'):
+            msp_tree_dist += t[2]
 
         start_len, end_len = self.dist_to_mst(state, nodes_left)
 
@@ -124,21 +122,15 @@ class AStarAlgorithm:
 
     def dist_to_mst(self, state, nodes_left):
         start_node = state[0]
-        start_len = float('inf')
-        start_found = False
-
         end_node = state[-1]
-        end_len = float('inf')
-        end_found = False
 
-        for e in self.edges:
-            if not start_found and is_connected_with_mst(e, start_node, nodes_left):
-                start_len = e.length
-                start_found = True
-            if not end_found and is_connected_with_mst(e, end_node, nodes_left):
-                end_len = e.length
-                end_found = True
-            if start_found and end_found:
-                break
+        start_edges = list()
+        heapq.heapify(start_edges)
+        end_edges = []
+        heapq.heapify(end_edges)
 
-        return start_len, end_len
+        for node in nodes_left:
+            heapq.heappush(start_edges, dist(start_node, node))
+            heapq.heappush(end_edges, dist(end_node, node))
+
+        return heapq.heappop(start_edges), heapq.heappop(end_edges)
